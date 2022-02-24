@@ -51,10 +51,10 @@ class _MyHomePageState extends State<MyHomePage> {
           Row(
             // mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(width: 16),
+              const SizedBox(width: 16),
               Expanded(
                 child: Column(
-                  children: [
+                  children: const [
                     Text("1"),
                     SizedBox(height: 4),
                     Text("1"),
@@ -67,10 +67,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   ],
                 ),
               ),
-              SizedBox(width: 12),
+              const SizedBox(width: 12),
               Expanded(
                 child: Column(
-                  children: [
+                  children: const [
                     Text("1"),
                     SizedBox(height: 4),
                     Text("1"),
@@ -83,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ],
                 ),
               ),
-              SizedBox(width: 16),
+              const SizedBox(width: 16),
             ],
           ),
           const Expanded(child: SizedBox()),
