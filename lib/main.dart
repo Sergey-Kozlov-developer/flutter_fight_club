@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_fight_club/fight_club_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() {
@@ -49,30 +50,31 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(213, 222, 240, 1),
-      body: Column(
-        children: [
-          const SizedBox(height: 40),
-          FightersInfo(
-            maxLivesCount: maxLives,
-            yourLivesCount: yourLives,
-            enemysLivesCount: enemysLives,
-          ),
-          const SizedBox(height: 11),
-          const Expanded(child: SizedBox()),
-          ControlsWidget(
-            defendingBodyPart: defendingBodyPart,
-            selectDefendingBodyPart: _selectDefendingBodyPart,
-            attackingBodyPart: attackingBodyPart,
-            selectAttackingBodyPart: _selectAttackingBodyPart,
-          ),
-          const SizedBox(height: 14),
-          GoButton(
-            text: yourLives == 0 || enemysLives == 0 ? "Start new game" : "Go",
-            onTap: _onGoButtonClick,
-            color: _getGoButtonColor(),
-          ),
-          const SizedBox(height: 40),
-        ],
+      body: SafeArea(
+        child: Column(
+          children: [
+            FightersInfo(
+              maxLivesCount: maxLives,
+              yourLivesCount: yourLives,
+              enemysLivesCount: enemysLives,
+            ),
+            const SizedBox(height: 11),
+            const Expanded(child: SizedBox()),
+            ControlsWidget(
+              defendingBodyPart: defendingBodyPart,
+              selectDefendingBodyPart: _selectDefendingBodyPart,
+              attackingBodyPart: attackingBodyPart,
+              selectAttackingBodyPart: _selectAttackingBodyPart,
+            ),
+            const SizedBox(height: 14),
+            GoButton(
+              text: yourLives == 0 || enemysLives == 0 ? "Start new game" : "Go",
+              onTap: _onGoButtonClick,
+              color: _getGoButtonColor(),
+            ),
+            const SizedBox(height: 16),
+          ],
+        ),
       ),
     );
   }
@@ -95,7 +97,6 @@ class _MyHomePageState extends State<MyHomePage> {
         yourLives = maxLives;
         enemysLives = maxLives;
       });
-
     } else if (attackingBodyPart != null && defendingBodyPart != null) {
       setState(() {
         /* Логика защиты и атаки*/
@@ -152,33 +153,28 @@ class GoButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const SizedBox(width: 16),
-        Expanded(
-          child: GestureDetector(
-            // если не выбрано, то кнопка GO серого цвета
-            onTap: onTap,
-            child: SizedBox(
-              height: 40,
-              child: ColoredBox(
-                // если кнопки невыбранны, то они серого цвета
-                color: color,
-                child: Center(
-                  child: Text(
-                    text.toUpperCase(),
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w900,
-                        fontSize: 16,
-                        color: Colors.white),
-                  ),
-                ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: GestureDetector(
+        // если не выбрано, то кнопка GO серого цвета
+        onTap: onTap,
+        child: SizedBox(
+          height: 40,
+          child: ColoredBox(
+            // если кнопки невыбранны, то они серого цвета
+            color: color,
+            child: Center(
+              child: Text(
+                text.toUpperCase(),
+                style: const TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 16,
+                    color: Colors.white),
               ),
             ),
           ),
         ),
-        const SizedBox(width: 16)
-      ],
+      ),
     );
   }
 }
@@ -197,38 +193,52 @@ class FightersInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        SizedBox(width: 16),
-        Expanded(
-          child: Center(
-            child: Column(
-              children: [
-                Text("You"),
-                LivesWidget(
-                  overallLivesCount: maxLivesCount,
-                  currentLivesCount: yourLivesCount,
-                ),
-              ],
-            ),
+    return SizedBox(
+      height: 160,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          LivesWidget(
+            overallLivesCount: maxLivesCount,
+            currentLivesCount: yourLivesCount,
           ),
-        ),
-        SizedBox(width: 12),
-        Expanded(
-          child: Center(
+          Column(
+            children: [
+              SizedBox(height: 16),
+              Text("You"),
+              SizedBox(height: 12),
+              ColoredBox(
+                color: Colors.red,
+                child: SizedBox(height: 92, width: 92),
+              ),
+            ],
+          ),
+
+          ColoredBox(
+            color: Colors.green,
+            child: SizedBox(height: 42, width: 42),
+          ),
+
+
+          Center(
             child: Column(
               children: [
+                SizedBox(height: 16),
                 Text("Enemy"),
-                LivesWidget(
-                  overallLivesCount: maxLivesCount,
-                  currentLivesCount: enemysLivesCount,
+                SizedBox(height: 12),
+                ColoredBox(
+                  color: Colors.blue,
+                  child: SizedBox(height: 92, width: 92),
                 ),
               ],
             ),
           ),
-        ),
-        SizedBox(width: 16),
-      ],
+          LivesWidget(
+            overallLivesCount: maxLivesCount,
+            currentLivesCount: yourLivesCount,
+          ),
+        ],
+      ),
     );
   }
 }
@@ -328,11 +338,12 @@ class LivesWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: List.generate(overallLivesCount, (index) {
         if (index < currentLivesCount) {
-          return Text("1");
+          return Image.asset(FightClubIcons.heartFull, height: 18, width: 18);
         } else {
-          return Text("0");
+          return Image.asset(FightClubIcons.heartEmpty, height: 18, width: 18);
         }
       }),
     );
