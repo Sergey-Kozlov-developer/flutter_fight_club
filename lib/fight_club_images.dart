@@ -1,12 +1,8 @@
 
 
-import 'package:flutter/material.dart';
+class FightClubImages {
 
-class FightClubImages extends StatelessWidget {
-  const FightClubImages({Key? key}) : super(key: key);
+  static const youAvatar = "assets/images/you-avatar.png";
+  static const enemyAvatar = "assets/images/enemy-avatar.png";
 
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
 }

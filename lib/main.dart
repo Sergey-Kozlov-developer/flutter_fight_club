@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_fight_club/fight_club_colors.dart';
 import 'package:flutter_fight_club/fight_club_icons.dart';
+import 'package:flutter_fight_club/fight_club_images.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() {
@@ -60,7 +61,20 @@ class _MyHomePageState extends State<MyHomePage> {
               enemysLivesCount: enemysLives,
             ),
             const SizedBox(height: 11),
-            const Expanded(child: SizedBox()),
+            // центрльное растояние между верхом и низом
+            const Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(left: 16, right: 16),
+                child: SizedBox(
+                  height: 146,
+                  width: double.infinity,
+                  child: ColoredBox(
+                    color: Color.fromRGBO(197, 209, 234, 1),
+                    child: Center(child: Text("ddddddd")),
+                  ),
+                ),
+              ),
+            ),
             ControlsWidget(
               defendingBodyPart: defendingBodyPart,
               selectDefendingBodyPart: _selectDefendingBodyPart,
@@ -199,37 +213,62 @@ class FightersInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 160,
-      child: ColoredBox(
-        color: Colors.white ,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            LivesWidget(
-              overallLivesCount: maxLivesCount,
-              currentLivesCount: yourLivesCount,
-            ),
-            Column(
-              children: [
-                SizedBox(height: 16),
-                Text(
-                  "You",
-                  style: TextStyle(
-                    color: FightClubColors.darkGreyText,
+      child: Stack(
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ColoredBox(
+                  color: Colors.white,
+                  child: SizedBox(height: 160, width: 160),
+                ),
+              ),
+              Expanded(
+                child: ColoredBox(
+                  color: Color.fromRGBO(197, 209, 234, 1),
+                  child: SizedBox(
+                    height: 160,
+                    width: 160,
                   ),
                 ),
-                SizedBox(height: 12),
-                ColoredBox(
-                  color: Colors.red,
-                  child: SizedBox(height: 92, width: 92),
-                ),
-              ],
-            ),
-            ColoredBox(
-              color: Colors.green,
-              child: SizedBox(height: 42, width: 42),
-            ),
-            Center(
-              child: Column(
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              LivesWidget(
+                overallLivesCount: maxLivesCount,
+                currentLivesCount: yourLivesCount,
+              ),
+              Column(
+                children: [
+                  SizedBox(height: 16),
+                  Text(
+                    "You",
+                    style: TextStyle(
+                      color: FightClubColors.darkGreyText,
+                    ),
+                  ),
+                  SizedBox(height: 12),
+                  SizedBox(
+                    height: 92,
+                    width: 92,
+                    child: Image.asset(FightClubImages.youAvatar),
+                  ),
+
+                  // ColoredBox(
+                  //   color: Colors.red,
+                  //   child: SizedBox(height: 92, width: 92),
+                  // ),
+                ],
+              ),
+              ColoredBox(
+                color: Colors.green,
+                child: SizedBox(height: 42, width: 42),
+              ),
+              Column(
                 children: [
                   SizedBox(height: 16),
                   Text(
@@ -239,19 +278,20 @@ class FightersInfo extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 12),
-                  ColoredBox(
-                    color: Colors.blue,
-                    child: SizedBox(height: 92, width: 92),
+                  SizedBox(
+                    height: 92,
+                    width: 92,
+                    child: Image.asset(FightClubImages.enemyAvatar),
                   ),
                 ],
               ),
-            ),
-            LivesWidget(
-              overallLivesCount: maxLivesCount,
-              currentLivesCount: yourLivesCount,
-            ),
-          ],
-        ),
+              LivesWidget(
+                overallLivesCount: maxLivesCount,
+                currentLivesCount: yourLivesCount,
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -280,7 +320,12 @@ class ControlsWidget extends StatelessWidget {
         Expanded(
           child: Column(
             children: [
-              Text("Defend".toUpperCase(), style: TextStyle(color: FightClubColors.darkGreyText,),),
+              Text(
+                "Defend".toUpperCase(),
+                style: TextStyle(
+                  color: FightClubColors.darkGreyText,
+                ),
+              ),
               const SizedBox(height: 13),
               BodyPartButton(
                 bodyPart: BodyPart.head,
@@ -306,7 +351,12 @@ class ControlsWidget extends StatelessWidget {
         Expanded(
           child: Column(
             children: [
-              Text("Attack".toUpperCase(), style: TextStyle(color: FightClubColors.darkGreyText,),),
+              Text(
+                "Attack".toUpperCase(),
+                style: TextStyle(
+                  color: FightClubColors.darkGreyText,
+                ),
+              ),
               const SizedBox(height: 13),
               BodyPartButton(
                 bodyPart: BodyPart.head,
