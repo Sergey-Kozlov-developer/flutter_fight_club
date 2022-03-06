@@ -48,6 +48,8 @@ class _MyHomePageState extends State<MyHomePage> {
   int yourLives = maxLives;
   int enemysLives = maxLives;
 
+  String centerText = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             const SizedBox(height: 11),
             // центрльное растояние между верхом и низом
-            const Expanded(
+            Expanded(
               child: Padding(
                 padding: EdgeInsets.only(left: 16, right: 16),
                 child: SizedBox(
@@ -70,7 +72,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   width: double.infinity,
                   child: ColoredBox(
                     color: Color.fromRGBO(197, 209, 234, 1),
-                    child: Center(child: Text("ddddddd")),
+                    child: Center(
+                      child: Text(
+                        centerText,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: FightClubColors.darkGreyText),
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -95,17 +103,6 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  // Color _getGoButtonColor() {
-  //   if (yourLives == 0 || enemysLives == 0) {
-  //     return FightClubColors.blackButton;
-  //   }
-  //   else if (attackingBodyPart == null || defendingBodyPart == null) {
-  //     return Colors.black38;
-  //   } else {
-  //     return const Color.fromRGBO(0, 0, 0, 0.87);
-  //   }
-  // }
-
   void _onGoButtonClick() {
     // кто победил и кто проиграл, надпись о начале игре
     // обновление состояния после окончания жизней
@@ -125,6 +122,25 @@ class _MyHomePageState extends State<MyHomePage> {
         if (yourLoseLife) {
           yourLives -= 1;
         }
+        // изменение текста при ударе и блокировки в центре экрана
+        if (enemysLives == 0 && yourLives == 0) {
+          centerText = "Draw";
+        } else if (yourLives == 0) {
+          centerText = "You lost";
+        } else if (enemysLives == 0) {
+          centerText = "You won";
+        } else {
+          String first = enemyLoseLife
+              ? "You hit enemy's ${attackingBodyPart!.name.toLowerCase()}."
+              : "Your attack was blocked.";
+
+          String second = yourLoseLife
+              ? "Enemy hit your ${whatEnemyAttack.name.toLowerCase()}."
+              : "Enemy's attack was blocked.";
+
+          centerText = "$first\n$second";
+        }
+
         whatEnemyDefends = BodyPart.random();
         whatEnemyAttack = BodyPart.random();
         /*Конец Логика защиты и атаки */
@@ -405,9 +421,18 @@ class LivesWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: List.generate(overallLivesCount, (index) {
         if (index < currentLivesCount) {
-          return Image.asset(FightClubIcons.heartFull, height: 18, width: 18);
+          return Padding(
+            padding:
+                EdgeInsets.only(bottom: index < overallLivesCount - 1 ? 4 : 0),
+            child: Image.asset(FightClubIcons.heartFull, height: 18, width: 18),
+          );
         } else {
-          return Image.asset(FightClubIcons.heartEmpty, height: 18, width: 18);
+          return Padding(
+            padding:
+                EdgeInsets.only(bottom: index < overallLivesCount - 1 ? 4 : 0),
+            child:
+                Image.asset(FightClubIcons.heartEmpty, height: 18, width: 18),
+          );
         }
       }),
     );
