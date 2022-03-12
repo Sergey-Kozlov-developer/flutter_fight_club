@@ -9,5 +9,5 @@ void main() {
   group("l04h01", () => runTestLesson3Task1());
   group("l04h02", () => runTestLesson3Task2());
   group("l04h03", () => runTestLesson3Task3());
-  // group("l04h04", () => runTestLesson3Task4());
+  group("l04h04", () => runTestLesson3Task4());
 }
