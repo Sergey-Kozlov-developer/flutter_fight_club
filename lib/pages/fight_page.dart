@@ -1,5 +1,3 @@
-
-
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -50,7 +48,7 @@ class _FightPageState extends State<FightPage> {
             Expanded(
               child: Padding(
                 padding:
-                EdgeInsets.only(left: 16, right: 16, top: 30, bottom: 30),
+                    EdgeInsets.only(left: 16, right: 16, top: 30, bottom: 30),
                 child: SizedBox(
                   height: 146,
                   width: double.infinity,
@@ -76,7 +74,7 @@ class _FightPageState extends State<FightPage> {
             const SizedBox(height: 14),
             ActionButton(
               text:
-              yourLives == 0 || enemysLives == 0 ? "Start new game" : "Go",
+                  yourLives == 0 || enemysLives == 0 ? "Start new game" : "Go",
               onTap: _onGoButtonClick,
               color: _getGoButtonColor(),
             ),
@@ -114,10 +112,16 @@ class _FightPageState extends State<FightPage> {
           yourLives -= 1;
         }
         // сохранение результата в sharedPreferences
-        final FightResult? fightResult = FightResult.calculateResult(yourLives, enemysLives);
+        final FightResult? fightResult =
+            FightResult.calculateResult(yourLives, enemysLives);
         if (fightResult != null) {
-          SharedPreferences.getInstance().then((sharedPreferences) => {
-            sharedPreferences.setString("last_fight_result", fightResult.result)
+          SharedPreferences.getInstance().then((sharedPreferences) {
+            sharedPreferences.setString(
+                "last_fight_result", fightResult.result);
+            // сохранеие результата битвы для вывода на главный экран
+            final String key = "stats_${fightResult.result.toLowerCase()}";
+            final int currentValue = sharedPreferences.getInt(key) ?? 0;
+            sharedPreferences.setInt(key, currentValue + 1);
           });
         }
         // изменение текста при ударе и блокировки в центре экрана
@@ -133,7 +137,8 @@ class _FightPageState extends State<FightPage> {
     }
   }
 
-  String _calculateCenterText(final bool yourLoseLife, final bool enemyLoseLife) {
+  String _calculateCenterText(
+      final bool yourLoseLife, final bool enemyLoseLife) {
     // изменение текста при ударе и блокировки в центре экрана
     if (enemysLives == 0 && yourLives == 0) {
       return "Draw";
@@ -174,7 +179,6 @@ class _FightPageState extends State<FightPage> {
     });
   }
 }
-
 
 class FightersInfo extends StatelessWidget {
   final int maxLivesCount;
@@ -397,12 +401,12 @@ class LivesWidget extends StatelessWidget {
         if (index < currentLivesCount) {
           return [
             Image.asset(FightClubIcons.heartFull, height: 18, width: 18),
-            if(index < overallLivesCount - 1) SizedBox(height: 4),
+            if (index < overallLivesCount - 1) SizedBox(height: 4),
           ];
         } else {
           return [
             Image.asset(FightClubIcons.heartEmpty, height: 18, width: 18),
-            if(index < overallLivesCount) SizedBox(height: 4),
+            if (index < overallLivesCount) SizedBox(height: 4),
           ];
         }
       }).expand((element) => element).toList(),

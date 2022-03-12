@@ -13,5 +13,6 @@ class FightClubColors {
   static const whiteText = Color.fromRGBO(255, 255, 255, 0.87);
   static const darkPurple = Color.fromRGBO(197, 209, 234, 1);
 
-
+  static const green = Color(0xFF038800);
+  static const red = Color(0xFFEA2C2C);
 }

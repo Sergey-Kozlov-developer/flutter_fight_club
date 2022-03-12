@@ -1,13 +1,25 @@
 
+import 'package:flutter/material.dart';
+import 'package:flutter_fight_club/resources/fight_club_colors.dart';
+
 class FightResult {
   final String result;
+  // изменение цвета кнопки в fight_result_widget
+  final Color color;
 
-  const FightResult._(this.result);
+  const FightResult._(this.result, this.color);
 
-  static const won = FightResult._("Won");
-  static const lost = FightResult._("Lost");
-  static const draw = FightResult._("Draw");
+  static const won = FightResult._("Won", FightClubColors.green);
+  static const lost = FightResult._("Lost", FightClubColors.red);
+  static const draw = FightResult._("Draw", FightClubColors.blueButton);
 
+  // для вывода в main_page
+  static const values = [won, lost, draw];
+  //  сохранение в shared_preferences
+  static FightResult getByName(final String name) {
+    return values.firstWhere((fightResult) => fightResult.result == name);
+  }
+  //
   static FightResult? calculateResult(final int yourLives, final int enemysLives) {
     if (yourLives == 0 && enemysLives == 0) {
       return draw;
