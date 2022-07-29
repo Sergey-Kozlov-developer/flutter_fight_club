@@ -1,16 +1,5 @@
 # flutter_fight_club
 
-A new Flutter project.
+Мини игра
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![alt text](https://firebasestorage.googleapis.com/v0/b/mis-work-6cfa3.appspot.com/o/3.jpg?alt=media&token=3ed5cdba-4abb-4a4c-b2c7-4ec8b11a4c03)
